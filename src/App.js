@@ -18,6 +18,18 @@ export default function App() {
         },
     ])
 
+    // handle row change
+    const handleRowChange = () => {
+        const rowsInput = []
+        for(let i = 0; i <= formData.length; i++) {
+            let type = typeof formData[i];
+            if(type === 'object') {
+                rowsInput.push(formData[i])
+            }
+        }
+        setFormData(rowsInput)
+    }
+
     // handle add main rows
     const addMainRow = (e) => {
         e.preventDefault();
@@ -56,9 +68,8 @@ export default function App() {
         subRows = [...subRows, rowsInput]
         mainIndex.subMenus = subRows
         FD[index] = mainIndex
-        console.log(FD)
-        // console.log({...formData[index], mainIndex})
         setFormData(FD)
+        handleRowChange();
     }
 
     // handle change
@@ -74,12 +85,12 @@ export default function App() {
 
             FD[index] = mainIndex
             setFormData(FD)
+            handleRowChange();
         }
     }
 
     // handle change
     const handleSubRowChange = (e, index, subRowIndex) => {
-        console.log(e, index, subRowIndex)
         let FD = formData
         let mainIndex = FD[index]
         let subRows = mainIndex?.subMenus;
@@ -91,7 +102,8 @@ export default function App() {
         }
         
         FD[index] = mainIndex
-        console.log(FD)
+        setFormData(FD)
+        handleRowChange();
     }
 
     // delete sub row
@@ -101,8 +113,8 @@ export default function App() {
         let subRows = mainIndex?.subMenus;
 
         subRows.splice(subIndex, 1);
-        console.log(FD);
         setFormData(FD);
+        handleRowChange();
     }
 
     return (
